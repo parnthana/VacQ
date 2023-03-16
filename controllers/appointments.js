@@ -7,7 +7,10 @@ const Hospital = require("../models/Hospital");
 exports.getAppointments = async (req, res, next) => {
   let query;
   if (req.user.role !== "admin") {
-    query = Appointment.find({ user: req.user.id }).populate({
+    query = Appointment.find({
+      user: req.user.id,
+      hospital: req.params.hospitalId,
+    }).populate({
       path: "hospital",
       select: "name province tel",
     });
